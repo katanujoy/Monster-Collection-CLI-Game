@@ -33,3 +33,17 @@ class Monster(Base):
 
     player = relationship("Player", back_populates="monsters")
     species = relationship("MonsterSpecies", back_populates="monsters")
+
+class Battle(Base):
+    __tablename__='battles'
+    
+    
+    id = Column(Integer,primary_key=True)
+    opponent_type = Column(string)
+    result = Column(String)
+    reward_money = Column(Integer)
+    reward_xp = Column(Integer)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+    player = relationship("Player", back_populates="battles")
+    
