@@ -1,6 +1,6 @@
-from db.models import MonsterSpecies  # Use correct import path
-from db.database import Session       # Get the DB session from your config
-
+from db.models import MonsterSpecies  # Import the MonsterSpecies model
+from db.database import SessionLocal  # Import the session factory
+# This script seeds the database with initial monster species data
 def seed_monsters(session):
     monster_data = [
         {"name": "Flametail", "type": "Fire", "base_stats": 50, "rarity": "Common", "abilities": "Blaze, Ember"},
@@ -19,7 +19,7 @@ def seed_monsters(session):
         {"name": "Solarion", "type": "Fire", "base_stats": 80, "rarity": "Legendary", "abilities": "Solar Beam, Burn"},
         {"name": "Glacifin", "type": "Ice", "base_stats": 77, "rarity": "Epic", "abilities": "Ice Beam, Shiver"}
     ]
-
+# This function seeds the database with initial monster species data
     for data in monster_data:
         existing = session.query(MonsterSpecies).filter_by(name=data["name"]).first()
         if not existing:
@@ -27,9 +27,9 @@ def seed_monsters(session):
             session.add(monster)
 
     session.commit()
-
-# Run this file directly to seed (optional)
+# Ensure all changes are saved to the database
 if __name__ == "__main__":
-    session = Session()
+    session = SessionLocal()
     seed_monsters(session)
-    print("Monsters seeded.")
+    session.close()
+    print("✅ Monsters seeded.")
